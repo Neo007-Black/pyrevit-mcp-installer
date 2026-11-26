@@ -1,0 +1,9 @@
+# large or generated files (publish the EXE on the Releases page instead)
+payload/
+dist/
+wheels/
+__pycache__/
+*.pyc
+*.key
+*.log
+*.tmp
