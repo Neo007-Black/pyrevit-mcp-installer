@@ -14,8 +14,8 @@ using System.Windows.Forms;
 [assembly: AssemblyProduct("pyRevit MCP for Claude")]
 [assembly: AssemblyCompany("Tay Zar")]
 [assembly: AssemblyCopyright("Installer by Tay Zar. Bundled software keeps its own licenses.")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 
 static class Launcher
 {

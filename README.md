@@ -48,7 +48,7 @@ Full instructions with pictures: **[Step-by-step tutorial](docs/TUTORIAL.md)**
 | pyRevit | 7.1 | 6.5.5 for 2019–2020, 7.1 for newer |
 | Connection | Local named pipe | `localhost:48884` with a secret key |
 | Approving changes | pyRevit asks Keep or Discard | Claude's permission prompts only |
-| Several Revit sessions | See pyRevit documentation | Use **one Revit at a time** |
+| Several Revit sessions | Choose the session in Claude | Choose the session in Claude (v1.1.0 and later) |
 | Name in Claude | `pyrevit` | `pyrevit-routes` |
 
 ## Test status

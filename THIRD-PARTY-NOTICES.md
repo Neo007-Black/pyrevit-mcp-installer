@@ -14,4 +14,6 @@ The release EXE contains the software below. Each keeps its own license. This pr
 - Added `revit_mcp/security.py`: a secret key required by every route.
 - Changed `startup.py` and `main.py` to use that key.
 - Added family builder routes and tools (`revit_mcp/family_builder.py`, `tools/family_builder_tools.py`) and registered them in `tools/__init__.py`.
+- Added selection between several Revit sessions (`tools/sessions.py`, `tools/session_tools.py`, `main.py`).
+- Included Revit 2019 in the installation list (`tools/launch_tools.py`).
 - Left the upstream `tests` folder out.

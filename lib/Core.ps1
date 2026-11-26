@@ -421,7 +421,18 @@ function Get-InstallPlan([int[]]$Years, [bool]$UseDesktop, [bool]$UseCode, [bool
     if ($routesYears.Count) {
         if (Test-Path -LiteralPath $paths.Extension) {
             if (Test-Path -LiteralPath (Join-Path $paths.Extension 'revit_mcp\security.py')) {
-                $warnings += 'The MCP extension is already installed. Your copy is kept.'
+                if (Test-Path -LiteralPath (Join-Path $paths.Extension 'tools\sessions.py')) {
+                    $warnings += 'The MCP extension is already installed. Your copy is kept.'
+                } elseif ((Read-State).extension) {
+                    # This installer added the older copy, so it may update it.
+                    $steps += New-Step 'Update the MCP extension this installer added earlier' {
+                        $from = Join-Path $script:Payload "extension\$($script:ExtName)"
+                        $r = Invoke-Tool "$env:SystemRoot\System32\robocopy.exe" @($from, (Get-Paths).Extension, '/E', '/IS', '/R:1', '/W:1', '/XD', '__pycache__', '/NFL', '/NDL', '/NJH', '/NJS', '/NP') -AllowFailure
+                        if ($r.ExitCode -ge 8) { throw "Updating the extension failed. $($r.Output)" }
+                    }
+                } else {
+                    $warnings += 'An older MCP extension that this installer did not add is kept. It cannot switch between several Revit sessions. To update it, rename or remove its folder, then install again.'
+                }
             } else {
                 $problems += "An older MCP extension without the security key is installed. Rename or remove this folder, then try again: $($paths.Extension)"
             }
@@ -449,7 +460,7 @@ function Get-InstallPlan([int[]]$Years, [bool]$UseDesktop, [bool]$UseCode, [bool
             Set-IniValue $ini 'routes' 'enabled' 'true'
         }
         $servers += [pscustomobject]@{ Name = 'pyrevit-routes'; Command = $paths.Python; Args = @((Join-Path $paths.Extension 'main.py')) }
-        $warnings += 'Routes method: run only one Revit at a time (port 48884). It has no Keep/Discard step, so keep Claude permission prompts on. Requests need a secret key that Revit creates.'
+        $warnings += 'Routes method: with several Revit windows open, tell Claude which one to use. Routes has no Keep/Discard step, so keep Claude permission prompts on. Requests need a secret key that Revit creates.'
         if ($ModernRoutes -and $modern.Count) { $warnings += 'Routes on Revit 2021 and newer (pyRevit 7.1) has not been tested yet.' }
     }
 

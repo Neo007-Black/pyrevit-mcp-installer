@@ -117,6 +117,22 @@ Start with read-only requests:
 
 When you ask for changes, read Claude's permission prompt before allowing it. With Agent MCP, also check the highlighted elements before choosing **Keep**.
 
+## Several Revit sessions
+
+**Routes** (`pyrevit-routes`) can work with several open Revit windows, one at a time:
+
+- "List the Revit sessions."
+- "Use Revit 2024." (If two windows have the same year, give the process id.)
+- "Switch to Revit 2019."
+
+If several are open and none is selected, nothing is sent to Revit. If the selected Revit closes, Claude does not switch to another one by itself. The selection is forgotten when Claude restarts.
+
+Launching a new Revit from Claude while others are open may report that it is not ready. List the sessions and select it.
+
+**Updating from v1.0.0:** run the new installer with the same choices. It updates an extension that the installer added earlier. An extension you added yourself is kept; rename or remove its folder first to get the new one. Then restart Claude.
+
+**Agent MCP** (`pyrevit`) has its own session selection built into pyRevit.
+
 ## Uninstall
 
 Close Revit, quit Claude, run the EXE and click **Uninstall...**. The installer keeps a record on your PC of what it added.
@@ -144,7 +160,7 @@ Nothing is ticked. Tick only what you want gone, click **Preview**, then **Unins
 | No server listed in Claude Desktop | Install again with Claude Desktop ticked. In Preview, note the config path, and compare it with the file opened by **Edit config** |
 | `401 Unauthorized` | Claude is still running an old server. Quit Claude completely and reopen |
 | "No active Revit document" | Open a project in Revit |
-| Routes does not answer | Keep only one Revit open, then restart it |
+| Routes does not answer | Ask Claude to list the Revit sessions. Check that Routes is enabled, then restart Revit |
 | Browser shows `Unauthorized` at `localhost:48884` | Expected. Routes only accepts requests with the secret key |
 | No pyRevit tab in a Revit version | Run the installer again and tick that version |
 | pyRevit files are "in use" | Quit Claude, then try again |

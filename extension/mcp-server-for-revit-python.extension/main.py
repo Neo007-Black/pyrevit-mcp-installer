@@ -6,6 +6,7 @@ import sys
 import httpx
 import anyio
 from mcp.server.fastmcp import FastMCP, Image, Context
+from tools import sessions
 import base64
 from typing import Optional, Dict, Any, Union
 
@@ -19,10 +20,6 @@ mcp = FastMCP(
     json_response=True
 )
 
-# Configuration
-REVIT_HOST = "localhost"
-REVIT_PORT = 48884  # Default pyRevit Routes port
-BASE_URL = f"http://{REVIT_HOST}:{REVIT_PORT}/revit_mcp"
 
 # Secret key written by the extension inside Revit (revit_mcp/security.py).
 KEY_FILE = os.path.join(os.environ.get("APPDATA", ""), "pyRevit", "mcp_routes.key")
@@ -56,8 +53,11 @@ async def revit_image(endpoint: str, ctx: Context = None) -> Union[Image, str]:
     try:
         transport = httpx.AsyncHTTPTransport(http1=True, http2=False)
         async with httpx.AsyncClient(timeout=60.0, transport=transport) as client:
-            response = await client.get(f"{BASE_URL}{endpoint}", params=_with_key())
-            
+            base_url, problem = await sessions.resolve(_with_key)
+            if problem:
+                return problem
+            response = await client.get(f"{base_url}{endpoint}", params=_with_key())
+
             if response.status_code == 200:
                 data = response.json()
                 image_bytes = base64.b64decode(data["image_data"])
@@ -77,7 +77,11 @@ async def _revit_call(method: str, endpoint: str, data: Dict = None, ctx: Contex
     try:
         transport = httpx.AsyncHTTPTransport(http1=True, http2=False)
         async with httpx.AsyncClient(timeout=timeout, transport=transport) as client:
-            url = f"{BASE_URL}{endpoint}"
+            # Which Revit to use is decided for every call (see tools/sessions.py).
+            base_url, problem = await sessions.resolve(_with_key)
+            if problem:
+                return problem
+            url = f"{base_url}{endpoint}"
 
             if method == "GET":
                 response = await client.get(url, params=_with_key(params))
@@ -94,7 +98,9 @@ async def _revit_call(method: str, endpoint: str, data: Dict = None, ctx: Contex
 
 # Register all tools BEFORE the main block
 from tools import register_tools
+from tools.session_tools import register_session_tools
 register_tools(mcp, revit_get, revit_post, revit_image)
+register_session_tools(mcp, _with_key)
 
 
 async def run_combined_async():

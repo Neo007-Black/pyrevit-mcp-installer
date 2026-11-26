@@ -72,7 +72,7 @@ def _find_revit_installations():
     program_files = os.environ.get(
         "ProgramFiles", r"C:\Program Files"
     )
-    for year in range(2027, 2019, -1):
+    for year in range(2035, 2018, -1):  # Revit 2019 and newer
         year_str = str(year)
         if year_str in found:
             continue
