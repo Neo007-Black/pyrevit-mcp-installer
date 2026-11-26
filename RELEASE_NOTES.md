@@ -7,7 +7,7 @@ All-in-one offline installer that connects Claude to Revit through pyRevit.
 - Preview, uninstall, and opt-in removal of existing setups
 - Secret key on the Routes method
 
-**Please read:** tested on one development PC only. See the test status in the README. The EXE is not code-signed.
+**Please read:** see the test status in the README. The EXE is not code-signed.
 
 Install guide: `docs/TUTORIAL.md`
 

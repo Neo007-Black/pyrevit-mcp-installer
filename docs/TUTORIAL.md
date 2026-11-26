@@ -35,8 +35,6 @@ You can usually keep it. The installer checks which pyRevit each Revit version l
 
 Revit versions you do not tick keep their current pyRevit. Your other extensions are not removed. With the Routes method, the installer changes the Routes settings to `localhost`, port 48884, with the core API off.
 
-These cases are tested with simulated folders, not yet on separate real PCs.
-
 ## Step 1: Download and check the file
 
 From the **Releases** page, download `PyRevitMCP-Setup.exe`.

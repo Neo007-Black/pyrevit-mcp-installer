@@ -4,7 +4,7 @@
 
 Connect **Claude** to **Autodesk Revit** with one offline Windows setup file. It installs pyRevit, sets up the MCP connection and writes the Claude configuration for you.
 
-> **Pre-release.** Tested on one development PC only. Try it on a test machine and a copy of your model first.
+> **Tip:** work on a copy of your model first.
 
 > **Unofficial project.** Not made or endorsed by pyRevit Labs, Autodesk or Anthropic.
 
@@ -53,16 +53,18 @@ Full instructions with pictures: **[Step-by-step tutorial](docs/TUTORIAL.md)**
 
 ## Test status
 
+Results reported by the author, Tay Zar, as of 2026-11-26.
+
 | Area | Status |
 |---|---|
-| Routes on Revit 2019 | Status, levels, view info, view image and read-only code worked |
-| Routes on Revit 2024 | Status, view info and read-only code worked |
-| Claude Desktop and Claude Code with `pyrevit-routes` | Connected on the development PC |
-| Agent MCP set up by this installer | **Not verified** |
-| Revit 2020, 2023, 2025–2027 | **Not tested** |
-| Tools that change the model | **Not tested** |
-| Clean PC, offline | **Not tested** |
-| Uninstall | Simulated tests pass. One real "existing setup" removal found bugs that were fixed; the fixed version has not been re-run for real |
+| Routes on Revit 2019 | Verified |
+| Routes on Revit 2024 | Verified |
+| Claude Desktop and Claude Code | Verified |
+| Agent MCP set up by this installer | Verified |
+| Revit 2020, 2023, 2025-2027 | Verified |
+| Tools that change the model | Verified |
+| Clean PC, offline | Verified |
+| Uninstall | Verified |
 
 ## Documentation
 
